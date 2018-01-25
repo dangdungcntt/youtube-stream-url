@@ -40,6 +40,8 @@ Youtube.getInfo({url: 'https://www.youtube.com/watch?v=J5yTcZ0OKlI'})
    }
   */
 ```
+### Update			
+Since the youtube-stream-url binary is updated regularly, you can run `npm update` to check for and download any updates for it.		
 
 ## License
 
