@@ -21,20 +21,30 @@ const getInfo = async ({url}) => {
     parse_str(video_info, data);
 
     let {
-        url_encoded_fmt_stream_map,
+        url_encoded_fmt_stream_map, player_response,
         title, thumbnail_url, view_count, length_seconds,
         allow_embed, author
     } = data;
 
-    let streamsMap = url_encoded_fmt_stream_map.split(',');
-
     let formats = [];
 
-    for (let stream of streamsMap) {
-        let format = {};
-        parse_str(stream, format);
+    if (url_encoded_fmt_stream_map) {
+      const streamsMap = url_encoded_fmt_stream_map.split(',');
 
-        formats.push(format);
+      for (let stream of streamsMap) {
+          let format = {};
+          parse_str(stream, format);
+
+          formats.push(format);
+      }
+    }
+
+    if (player_response) {
+      let parsedResponse = JSON.parse(player_response);
+      if (parsedResponse.streamingData) {
+        for (let i = 0; i < parsedResponse.streamingData.formats.length; i++)
+        formats.push(parsedResponse.streamingData.formats[i]);
+      }
     }
 
     return {
@@ -75,7 +85,7 @@ const getVideoId = ({url}) => {
                 }
             }
         }
-    }
+      }
 
     return null;
 };
@@ -169,8 +179,8 @@ const parse_str = (str, array) => {
                     ct = -1;
                     for (p in obj) {
                         if (obj.hasOwnProperty(p)) {
-                            if (+p > ct && p.match(/^\d+$/g)) {
-                                ct = +p
+                            if (Number(p) > ct && p.match(/^\d+$/g)) {
+                                ct = Number(p)
                             }
                         }
                     }
@@ -186,5 +196,3 @@ module.exports = {
     getInfo,
     getVideoId
 };
-
-
