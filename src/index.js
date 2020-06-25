@@ -1,16 +1,16 @@
 const axios = require('axios');
 
-const getInfo = async ({url}) => {
+const getInfo = async ({ url }) => {
 
-    let video_id = getVideoId({url});
+    let video_id = getVideoId({ url });
 
     if (!video_id) return false;
 
     let ytApi = 'https://www.youtube.com/get_video_info';
 
     let response = await axios.get(ytApi, {
-        params: {video_id}
-    }).catch(err => ({data: false}));
+        params: { video_id }
+    }).catch(err => ({ data: false }));
 
     if (!response.data || response.data.indexOf('errorcode') > -1) return false;
 
@@ -21,40 +21,30 @@ const getInfo = async ({url}) => {
     parse_str(video_info, data);
 
     let {
-        url_encoded_fmt_stream_map, player_response,
-        title, thumbnail_url, view_count, length_seconds,
-        allow_embed, author
+        player_response
     } = data;
 
-    let formats = [];
-
-    if (url_encoded_fmt_stream_map) {
-      const streamsMap = url_encoded_fmt_stream_map.split(',');
-
-      for (let stream of streamsMap) {
-          let format = {};
-          parse_str(stream, format);
-
-          formats.push(format);
-      }
+    if (!player_response) {
+        return false;
     }
 
-    if (player_response) {
-      let parsedResponse = JSON.parse(player_response);
-      if (parsedResponse.streamingData) {
-        for (let i = 0; i < parsedResponse.streamingData.formats.length; i++)
-        formats.push(parsedResponse.streamingData.formats[i]);
-      }
-    }
+    try {
+        let parsedResponse = JSON.parse(player_response);
+        let streamingData = parsedResponse.streamingData || {}
 
-    return {
-        video_id, title, thumbnail_url, view_count,
-        length_seconds, allow_embed, author, formats
+
+        return {
+            videoDetails: parsedResponse.videoDetails || {},
+            formats: (streamingData.formats || []).concat(streamingData.adaptiveFormats || []).filter(format => format.url)
+        }
+    } catch {
+        return false
+        //Do nothing here
     }
 };
 
-const getVideoId = ({url}) => {
-    let opts = {fuzzy: true};
+const getVideoId = ({ url }) => {
+    let opts = { fuzzy: true };
 
     if (/youtu\.?be/.test(url)) {
 
@@ -85,7 +75,7 @@ const getVideoId = ({url}) => {
                 }
             }
         }
-      }
+    }
 
     return null;
 };
