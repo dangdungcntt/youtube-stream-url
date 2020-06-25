@@ -15,7 +15,7 @@ npm install youtube-stream-url
 ``` js
 const Youtube = require('youtube-stream-url');
 
-Youtube.getInfo({url: 'https://www.youtube.com/watch?v=J5yTcZ0OKlI'})
+Youtube.getInfo({url: 'https://www.youtube.com/watch?v=LUU58iwi7NQ'})
   .then(video => console.log(video));
   
   /* video
