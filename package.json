@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/dangdungcntt/youtube-stream-url#readme",
   "dependencies": {
-    "axios": "^0.18.1"
+    "axios": "^0.21.1"
   }
 }
