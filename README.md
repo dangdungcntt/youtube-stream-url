@@ -15,50 +15,44 @@ npm install youtube-stream-url
 ``` js
 const Youtube = require('youtube-stream-url');
 
-Youtube.getInfo({url: 'https://www.youtube.com/watch?v=LUU58iwi7NQ'})
+Youtube.getInfo({url: 'https://www.youtube.com/watch?v=pJ7WN3yome4'})
   .then(video => console.log(video));
   
   /* video
   { 
     videoDetails: {
-      videoId: 'LUU58iwi7NQ',
-      title: 'HAI CHÚNG TA | OFFICIAL MUSIC VIDEO | THÁI TRINH - QUANG ĐĂNG',
-      lengthSeconds: '228',
+      videoId: 'pJ7WN3yome4',
+      title: 'M1 Ultra Mac Studio - Benchmarks & Thermals (The TRUTH!)',
+      lengthSeconds: '1165',
       keywords: [
-        'Thái Trinh- Quang Đăng',
-        'Hai chúng ta',
-        'hai chung ta',
-        'mv hai chúng ta',
-        'mv hai chung ta',
-        'hai chúng ta thái trinh',
-        'hai chung ta thai trinh',
-        'mv hai chúng ta thái trinh',
-        'mv hai chung ta thai trinh',
-        'hai chúng ta offical',
-        'hai chung ta offcial',
-        'quang đăng',
-        'hai chúng ta music video',
-        'thai trinh quang dang',
-        'thai trinh',
-        'quang dang',
-        'quang đăng thái trinh',
-        'quang đang thai trinh',
-        'hai chung ta thai trinh quang dang',
-        'thai trinh va quang dang',
-        'hai chung ta quang dang'
+        'mac studio',
+        'mac',
+        'apple',
+        'apple mac',
+        'apple mac studio',
+        'mac studio benchmarks',
+        'mac studio teardown',
+        'mac studio perfornance',
+        'mac studio vs',
+        'm1 ultra',
+        'm1 ultra chip',
+        'm1 ultra mac studio',
+        'm1 ultra vs m1 max',
+        'm1 max vs m1 ultra',
+        'm1 max vs m1 ultra mac studio',
+        'm1 ultra vs m1 max mac studio',
+        'mac studio vs macbook pro',
+        'mac studio vs imac',
+        'mac studio vs mac mini',
+        'mac studio thermal throttle test',
+        'mac studio benchmarks test',
+        'mac studio watt metere',
+        'mac studio max tech',
+        'mac studio ultra'
       ],
-      channelId: 'UCqJPm_4RfFdk_LIsExZUYZA',
+      channelId: 'UCptwuAv0XQHo1OQUSaO6NHw',
       isOwnerViewing: false,
-      shortDescription: 'Ca khúc "Hai Chúng Ta" do chính tay Thái Trinh sáng tác như một món quà dành tặng cho Quang Đăng, để kỷ niệm chuyện tình yêu của cả hai. Đây là MV đầu tiên Đăng - Trinh đóng chung kể từ khi công khai tình cảm. Và qua bài hát này Trinh muốn nhắn nhủ rằng, trong chuyện tình yêu, cặp đôi nào cũng có những lúc cãi vã, giận hờn thậm chí là buông lời chia tay. Những lúc như thế, hãy luôn nhớ những lúc vui vẻ, hạnh phúc bên nhau mà bỏ qua những quan điểm cá nhân, thông cảm cho nhau để hiểu nhau và yêu nhau hơn. Trinh cũng muốn gửi lời đến bạn trai của mình nếu sau này có giận, mình sẽ đem bài này ra hát để anh hết giận. Chúc mọi người có những phút giây nghe nhạc thật tuyệt vời.\n' +
-        '\n' +
-        'MỌI NGƯỜI NHỚ SUBSCRIBE KÊNH CỦA THÁI TRINH ĐỂ XEM NGAY CÁC VIDEO MỚI NHẤT NHÉ.\n' +
-        '► Subscribe: https://goo.gl/5759BC\n' +
-        '\n' +
-        '► Theo dõi thông tin của Thái Trinh tại:\n' +
-        'Facebook: http://bit.ly/ThaiTrinhNg\n' +
-        'Fanpage: http://bit.ly/ThaiTrinhOfficial\n' +
-        '\n' +
-        'Mọi người vui lòng không đăng tải lại video khi chưa được sự đồng ý của Thái Trinh nhé. Chân thành cảm ơn :x',
+      shortDescription: '...',
       isCrawlable: true,
       thumbnail: { thumbnails: [Array] },
       averageRating: 4.9487238,
