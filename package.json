@@ -1,27 +1,27 @@
 {
-  "name": "youtube-stream-url",
-  "version": "2.0.2",
-  "description": "Get stream url from youtube link",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dangdungcntt/youtube-stream-url.git"
-  },
-  "keywords": [
-    "youtube",
-    "stream",
-    "url"
-  ],
-  "author": "DangDung <dangdungcntt@gmail.com> (dangdungcntt.wordpress.com)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dangdungcntt/youtube-stream-url/issues"
-  },
-  "homepage": "https://github.com/dangdungcntt/youtube-stream-url#readme",
-  "dependencies": {
-    "axios": "^0.21.1"
-  }
+    "name": "youtube-stream-url",
+    "version": "2.0.3",
+    "description": "Get stream url from youtube link",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dangdungcntt/youtube-stream-url.git"
+    },
+    "keywords": [
+        "youtube",
+        "stream",
+        "url"
+    ],
+    "author": "DangDung <dangdungcntt@gmail.com> (dangdungcntt.wordpress.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dangdungcntt/youtube-stream-url/issues"
+    },
+    "homepage": "https://github.com/dangdungcntt/youtube-stream-url#readme",
+    "dependencies": {
+        "axios": "^0.21.1"
+    }
 }
