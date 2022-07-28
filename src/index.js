@@ -112,7 +112,6 @@ const getInfo = async({ url }) => {
                 .filter(format => format.url)
         }
     } catch (e) {
-        console.log(e);
         //Do nothing here
         return false
     }
