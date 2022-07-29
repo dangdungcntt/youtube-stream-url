@@ -1,6 +1,6 @@
 {
     "name": "youtube-stream-url",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "description": "Get stream url from youtube link",
     "main": "src/index.js",
     "scripts": {
@@ -22,6 +22,8 @@
     },
     "homepage": "https://github.com/dangdungcntt/youtube-stream-url#readme",
     "dependencies": {
-        "axios": "^0.21.1"
+        "axios": "^0.21.1",
+        "m3u8-file-parser": "^0.2.4",
+        "m3u8-parser": "^4.7.1"
     }
 }

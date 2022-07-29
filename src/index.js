@@ -1,21 +1,32 @@
 const axios = require('axios');
+const M3U8FileParser = require('m3u8-file-parser');
+const m3u8Parser = new M3U8FileParser();
 
-const resolvePlayerResponse = (watchHtml) => {
-    if (!watchHtml) {
-        return '';
-    }
-
-    let matches = watchHtml.match(/ytInitialPlayerResponse = (.*)}}};/)
-    return matches ? matches[1] + '}}}' : ''
-}
-
-const getJSFile = async(url) => {
+const getRemoteFile = async(url) => {
     try {
         let { data } = await axios.get(url);
         return data;
     } catch (e) {
         return null;
     }
+}
+
+const resolvePlayerResponse = (watchHtml) => {
+    if (!watchHtml) {
+        return '';
+    }
+
+    let matches = watchHtml.match(/ytInitialPlayerResponse = (.*)}}};/);
+    return matches ? matches[1] + '}}}' : '';
+}
+
+const resoleM3U8Link = (watchHtml) => {
+    if (!watchHtml) {
+        return null;
+    }
+
+    let matches = watchHtml.match(/hlsManifestUrl":"(.*\/file\/index\.m3u8)/)
+    return matches ? matches[1] : null;
 }
 
 const buildDecoder = async(watchHtml) => {
@@ -29,8 +40,7 @@ const buildDecoder = async(watchHtml) => {
         return null;
     }
 
-
-    let jsFileContent = await getJSFile(`https://www.youtube.com${jsFileUrlMatches[0]}`);
+    let jsFileContent = await getRemoteFile(`https://www.youtube.com${jsFileUrlMatches[0]}`);
 
     let decodeFunctionMatches = jsFileContent.match(/function.*\.split\(\"\"\).*\.join\(\"\"\)}/);
 
@@ -54,7 +64,7 @@ const buildDecoder = async(watchHtml) => {
 
     return function(signatureCipher) {
         let params = new URLSearchParams(signatureCipher);
-        let { s: signature, sp: signatureParam, url } = Object.fromEntries(params);
+        let { s: signature, sp: signatureParam = 'signature', url } = Object.fromEntries(params);
         let decodedSignature = eval(`
             "use strict";
             ${varDeclaresMatches[1]}
@@ -63,7 +73,6 @@ const buildDecoder = async(watchHtml) => {
 
         return `${url}&${signatureParam}=${encodeURIComponent(decodedSignature)}`;
     }
-
 }
 
 const getInfo = async({ url }) => {
@@ -85,8 +94,7 @@ const getInfo = async({ url }) => {
         let parsedResponse = JSON.parse(ytInitialPlayerResponse);
         let streamingData = parsedResponse.streamingData || {};
 
-        let formats = (streamingData.formats || [])
-            .concat(streamingData.adaptiveFormats || []);
+        let formats = (streamingData.formats || []).concat(streamingData.adaptiveFormats || []);
 
         let isEncryptedVideo = !!formats.find(it => !!it.signatureCipher);
 
@@ -106,14 +114,35 @@ const getInfo = async({ url }) => {
             }
         }
 
-        return {
+        let result = {
             videoDetails: parsedResponse.videoDetails || {},
-            formats: formats
-                .filter(format => format.url)
+            formats: formats.filter(format => format.url)
+        };
+
+        if (result.videoDetails.isLiveContent) {
+            try {
+                let m3u8Link = resoleM3U8Link(response.data);
+                if (m3u8Link) {
+                    let m3u8FileContent = await getRemoteFile(m3u8Link);
+
+                    m3u8Parser.read(m3u8FileContent);
+
+                    result.liveData = {
+                        manifestUrl: m3u8Link,
+                        data: m3u8Parser.getResult()
+                    };
+
+                    m3u8Parser.reset();
+                }
+            } catch (e) {
+                //Do nothing here
+            }
         }
+
+        return result;
     } catch (e) {
         //Do nothing here
-        return false
+        return false;
     }
 };
 
