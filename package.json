@@ -23,7 +23,6 @@
     "homepage": "https://github.com/dangdungcntt/youtube-stream-url#readme",
     "dependencies": {
         "axios": "^0.21.1",
-        "m3u8-file-parser": "^0.2.4",
-        "m3u8-parser": "^4.7.1"
+        "m3u8-file-parser": "^0.2.4"
     }
 }
