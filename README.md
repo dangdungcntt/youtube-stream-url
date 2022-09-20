@@ -1,6 +1,6 @@
 # youtube-stream-url
 
-Get stream url from youtube video in node.js.
+Get stream url from youtube video in node.js (included Copyright Music Video).
 
 ## Installation
 
