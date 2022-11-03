@@ -2,7 +2,7 @@ const axios = require('axios');
 const M3U8FileParser = require('m3u8-file-parser');
 const m3u8Parser = new M3U8FileParser();
 
-const getRemoteFile = async(url) => {
+const getRemoteFile = async (url) => {
     try {
         let { data } = await axios.get(url);
         return data;
@@ -29,7 +29,7 @@ const resoleM3U8Link = (watchHtml) => {
     return matches ? matches[1] : null;
 }
 
-const buildDecoder = async(watchHtml) => {
+const buildDecoder = async (watchHtml) => {
     if (!watchHtml) {
         return null;
     }
@@ -62,20 +62,20 @@ const buildDecoder = async(watchHtml) => {
         return null;
     }
 
-    return function(signatureCipher) {
+    return function (signatureCipher) {
         let params = new URLSearchParams(signatureCipher);
         let { s: signature, sp: signatureParam = 'signature', url } = Object.fromEntries(params);
-        let decodedSignature = eval(`
+        let decodedSignature = new Function(`
             "use strict";
             ${varDeclaresMatches[1]}
-            (${decodeFunction})("${signature}")
-        `);
+            return (${decodeFunction})("${signature}");
+        `)();
 
         return `${url}&${signatureParam}=${encodeURIComponent(decodedSignature)}`;
     }
 }
 
-const getInfo = async({ url }) => {
+const getInfo = async ({ url, throwOnError = false }) => {
 
     let videoId = getVideoId({ url });
 
@@ -83,13 +83,17 @@ const getInfo = async({ url }) => {
 
     let ytApi = 'https://www.youtube.com/watch';
 
-    let response = await axios.get(ytApi, {
-        params: { v: videoId }
-    }).catch(err => ({ data: false }));
-
-    if (!response.data || response.data.indexOf('errorcode') > -1) return false;
-
     try {
+        const response = await axios.get(ytApi, {
+            params: { v: videoId }
+        });
+
+        if (!response || response.status != 200 || !response.data || response.data.indexOf('errorcode') > -1) {
+            const error = new Error('Cannot get youtube video response')
+            error.response = response;
+            throw error;
+        }
+
         let ytInitialPlayerResponse = resolvePlayerResponse(response.data);
         let parsedResponse = JSON.parse(ytInitialPlayerResponse);
         let streamingData = parsedResponse.streamingData || {};
@@ -135,13 +139,18 @@ const getInfo = async({ url }) => {
                     m3u8Parser.reset();
                 }
             } catch (e) {
-                //Do nothing here
+                if (throwOnError) {
+                    throw e;
+                }
             }
         }
 
         return result;
     } catch (e) {
-        //Do nothing here
+        if (throwOnError) {
+            throw e;
+        }
+
         return false;
     }
 };
