@@ -117,6 +117,17 @@ Full output
 
 For live video, you can get HLS Stream URL via `liveData` field. `liveData.data` format is [m3u8-file-parser](https://npm.io/package/m3u8-file-parser) output of manifest file from `liveData.manifestUrl`.
 
+#### Handle error
+
+By default, `getInfo` function return `false` when an error occurred while process. If you when manualy handle error, you can pass option `throwOnError: true`
+
+```js
+try {
+    await Youtube.getInfo({url: '...', throwOnError: true})
+} catch (e) {
+    //Handle error here
+}
+```
 
 ### Update			
 Since the youtube-stream-url binary is updated regularly, you can run `npm update` to check for and download any updates for it.		
