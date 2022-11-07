@@ -119,7 +119,7 @@ For live video, you can get HLS Stream URL via `liveData` field. `liveData.data`
 
 #### Handle error
 
-By default, `getInfo` function return `false` when an error occurred while process. If you when manualy handle error, you can pass option `throwOnError: true`
+By default, `getInfo` function return `false` when an error occurred while process. If you want manualy handle error, you can pass option `throwOnError: true`
 
 ```js
 try {
