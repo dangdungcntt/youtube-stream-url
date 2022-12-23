@@ -57,7 +57,7 @@ const $4fa36e821943b400$var$getInfo = async ({ url: url , throwOnError: throwOnE
                 v: videoId
             }
         });
-        if (!response || response.status != 200 || !response.data || response.data.indexOf("errorcode") > -1) {
+        if (!response || response.status != 200 || !response.data) {
             const error = new Error("Cannot get youtube video response");
             error.response = response;
             throw error;

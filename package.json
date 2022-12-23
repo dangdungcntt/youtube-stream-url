@@ -1,6 +1,6 @@
 {
     "name": "youtube-stream-url",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "description": "Get stream url from youtube link",
     "source": "src/index.js",
     "main": "dist/index.js",
