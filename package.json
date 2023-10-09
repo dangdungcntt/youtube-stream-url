@@ -1,6 +1,6 @@
 {
     "name": "youtube-stream-url",
-    "version": "2.4.1",
+    "version": "2.4.2",
     "description": "Get stream url from youtube link",
     "source": "src/index.js",
     "main": "dist/index.js",
@@ -28,5 +28,8 @@
     },
     "devDependencies": {
         "parcel": "^2.7.0"
+    },
+    "volta": {
+        "node": "18.18.0"
     }
 }

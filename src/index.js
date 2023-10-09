@@ -56,9 +56,18 @@ const buildDecoder = async (watchHtml) => {
         return null;
     }
 
-    let varDeclaresMatches = jsFileContent.match(new RegExp(`(var ${varNameMatches[1]}={[\\s\\S]+}};)[a-zA-Z0-9]+\\.[a-zA-Z0-9]+\\.prototype`));
+    let varStartIndex = jsFileContent.indexOf(`var ${varNameMatches[1]}={`);
+    if (varStartIndex < 0) {
+        return null;
+    }
+    let varEndIndex = jsFileContent.indexOf('}};', varStartIndex);
+    if (varEndIndex < 0) {
+        return null
+    }
 
-    if (!varDeclaresMatches) {
+    let varDeclares = jsFileContent.substring(varStartIndex, varEndIndex + 3);
+
+    if (!varDeclares) {
         return null;
     }
 
@@ -67,7 +76,7 @@ const buildDecoder = async (watchHtml) => {
         let { s: signature, sp: signatureParam = 'signature', url } = Object.fromEntries(params);
         let decodedSignature = new Function(`
             "use strict";
-            ${varDeclaresMatches[1]}
+            ${varDeclares}
             return (${decodeFunction})("${signature}");
         `)();
 

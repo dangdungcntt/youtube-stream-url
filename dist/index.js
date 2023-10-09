@@ -32,14 +32,18 @@ const $4fa36e821943b400$var$buildDecoder = async (watchHtml)=>{
     let decodeFunction = decodeFunctionMatches[0];
     let varNameMatches = decodeFunction.match(/\.split\(\"\"\);([a-zA-Z0-9]+)\./);
     if (!varNameMatches) return null;
-    let varDeclaresMatches = jsFileContent.match(new RegExp(`(var ${varNameMatches[1]}={[\\s\\S]+}};)[a-zA-Z0-9]+\\.[a-zA-Z0-9]+\\.prototype`));
-    if (!varDeclaresMatches) return null;
+    let varStartIndex = jsFileContent.indexOf(`var ${varNameMatches[1]}={`);
+    if (varStartIndex < 0) return null;
+    let varEndIndex = jsFileContent.indexOf("}};", varStartIndex);
+    if (varEndIndex < 0) return null;
+    let varDeclares = jsFileContent.substring(varStartIndex, varEndIndex + 3);
+    if (!varDeclares) return null;
     return function(signatureCipher) {
         let params = new URLSearchParams(signatureCipher);
         let { s: signature , sp: signatureParam = "signature" , url: url  } = Object.fromEntries(params);
         let decodedSignature = new Function(`
             "use strict";
-            ${varDeclaresMatches[1]}
+            ${varDeclares}
             return (${decodeFunction})("${signature}");
         `)();
         return `${url}&${signatureParam}=${encodeURIComponent(decodedSignature)}`;
