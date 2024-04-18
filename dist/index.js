@@ -6,7 +6,7 @@ var $gXNCa$m3u8fileparser = require("m3u8-file-parser");
 const $4fa36e821943b400$var$m3u8Parser = new $gXNCa$m3u8fileparser();
 const $4fa36e821943b400$var$getRemoteFile = async (url)=>{
     try {
-        let { data: data  } = await $gXNCa$axios.get(url);
+        let { data: data } = await $gXNCa$axios.get(url);
         return data;
     } catch (e) {
         return null;
@@ -40,7 +40,7 @@ const $4fa36e821943b400$var$buildDecoder = async (watchHtml)=>{
     if (!varDeclares) return null;
     return function(signatureCipher) {
         let params = new URLSearchParams(signatureCipher);
-        let { s: signature , sp: signatureParam = "signature" , url: url  } = Object.fromEntries(params);
+        let { s: signature, sp: signatureParam = "signature", url: url } = Object.fromEntries(params);
         let decodedSignature = new Function(`
             "use strict";
             ${varDeclares}
@@ -49,7 +49,7 @@ const $4fa36e821943b400$var$buildDecoder = async (watchHtml)=>{
         return `${url}&${signatureParam}=${encodeURIComponent(decodedSignature)}`;
     };
 };
-const $4fa36e821943b400$var$getInfo = async ({ url: url , throwOnError: throwOnError = false  })=>{
+const $4fa36e821943b400$var$getInfo = async ({ url: url, throwOnError: throwOnError = false })=>{
     let videoId = $4fa36e821943b400$var$getVideoId({
         url: url
     });
@@ -99,12 +99,12 @@ const $4fa36e821943b400$var$getInfo = async ({ url: url , throwOnError: throwOnE
             if (throwOnError) throw e;
         }
         return result;
-    } catch (e1) {
-        if (throwOnError) throw e1;
+    } catch (e) {
+        if (throwOnError) throw e;
         return false;
     }
 };
-const $4fa36e821943b400$var$getVideoId = ({ url: url  })=>{
+const $4fa36e821943b400$var$getVideoId = ({ url: url })=>{
     let opts = {
         fuzzy: true
     };

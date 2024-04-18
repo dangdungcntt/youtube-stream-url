@@ -11,6 +11,31 @@ npm install youtube-stream-url
 ```
 
 ## Usage
+Download On Youtube
+1. In Vscode
+   1. Click Run and Debug
+   2. Enter URL in input box (Make sure url is not in a playlist)
+   3. Ctrl+Left Click last url in terminal
+2. In Chrome
+   1. Right click anywhere on the screen
+   2. Open Inspect
+   3. Click on the 3 vertical bars next to the song
+   4. Click Download
+3. In Terminal
+   1. `cd C:\Users\dylin\Downloads`
+   2. `ffmpeg -i videoplayback.weba "Name of Song.mp3"`
+   3. `move "Name of Song.mp3" F:/Music/`
+4. In Spotify Windows
+   1. Go to Local Files
+   2. Search for song
+   3. Add song to a playlist
+5. In Spotify IPhone
+   1. Download Playlist
+
+Download On Soundcloud
+1. In Terminal
+   1. `yt-dlp https://soundcloud.com/audiomacking/song-name`
+   2. `ffmpeg -i "Song Name.opus" "Song Name.mp3"`
 
 ``` js
 const Youtube = require('youtube-stream-url');
@@ -21,7 +46,7 @@ Youtube.getInfo({url: 'https://www.youtube.com/watch?v=pJ7WN3yome4'}).then(video
 Full output
 
 ```js
-{ 
+{
     videoDetails: {
         videoId: 'pJ7WN3yome4',
         title: 'M1 Ultra Mac Studio - Benchmarks & Thermals (The TRUTH!)',
@@ -129,8 +154,8 @@ try {
 }
 ```
 
-### Update			
-Since the youtube-stream-url binary is updated regularly, you can run `npm update` to check for and download any updates for it.		
+### Update
+Since the youtube-stream-url binary is updated regularly, you can run `npm update` to check for and download any updates for it.
 
 ## License
 
